@@ -8,7 +8,7 @@ import glob
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-
+## Pulls connection data from your .env file
 load_dotenv()
 
 dbname = os.getenv('F1DBNAME')
@@ -17,13 +17,19 @@ password = os.getenv('F1PASS')
 host = os.getenv('F1HOST')
 port = os.getenv('F1PORT')
 
-
+# creates connectiont to your database
 
 engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{dbname}')
 
 conn = engine.connect()
 
-#for fname in glob.glob('data/race_data/*.csv'):
-pd.read_csv('data/race_data/TelemetryData_2048465535648368309.csv', low_memory=False).to_sql(name = 'TelemetryData_204', con=conn, if_exists="replace")
+#pushes input file to your db
+
+def csv_to_db(file_path,table_name):
+    pd.read_csv(file_path, low_memory=False).to_sql(name = table_name, con=conn, if_exists="replace")
+
+
+# Two arguments are file location and desired name.
+python csv to db('data/race_data/TelemetryData_2048465535648368309.csv', 'TelemetryData_204' )
 
 conn.close()

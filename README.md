@@ -30,11 +30,13 @@ Lastly, several columns contained a string of multiple readings (i.e. tire temps
 
 ## **Questions**
 Which sub-systems are correlated?
+
 Can individual driver telemetry vs all driver avg,max,min indicate system issues?
+
 Can finishing position be correlated with any specific telemetry subsystem?
 
 ## **Visualization**
-###Which sub-systems are correlated?
+### Which sub-systems are correlated?
 
 ![alt text](img/image.png)
 
