@@ -24,7 +24,7 @@ For manipulation of these massive datasets, I created a script (csv_to_db.py) fo
 
 For comparing information from an individual driver across multiple races, I wrote several .sql files for querying my database for a single driver and saving that query as an excel file that can be pulled into a pandas dataframe.
 
-For instances where a driver did not finish a race, the telemetry recorded a 0 for reading such as speed. I converted these to NaN to eliminated their consideration when averaging values for drivers across all categories.
+For instances where a driver did not finish a race, the telemetry recorded a 0 for reading such as speed. I converted these to NaN to eliminate their consideration when averaging values for drivers across all categories.
 
 Lastly, several columns contained a string of multiple readings (i.e. tire temps listed as '30/30/30/30' in a single column). I separated the string using .split and converted to numeric using .to_numeric to easy ingest into .corr().
 
@@ -34,14 +34,53 @@ Can individual driver telemetry vs all driver avg,max,min indicate system issues
 Can finishing position be correlated with any specific telemetry subsystem?
 
 ## **Visualization**
-Which sub-systems are correlated?
-![alt text](img/image.png)
+###Which sub-systems are correlated?
 
-![alt text](img/image-1.png)
+![alt text](image.png)
 
-![alt text](img/image-2.png)
-Can individual driver telemetry vs all driver avg,max,min indicate system issues?
+As can probably be expected, systems like brake/throttle are highly correlated with g force. Speed and avg gear are highly correlated.
 
-Can finishing position be correlated with any specific telemetry subsystem?
+![alt text](image-8.png)
+
+All tire and brake temps also nicely corrlate with each other.
+
+Some unusual correlations include temperature and remaining fuel, brake temp and speed,and a non-uniform correlation among tire pressure where all other tire attributes are uniform.
+
+The engine temp and fuel correlation does not appear to exist when viewing the line plot.  
+
+![alt text](image-2.png)
+
+Brake temp and speed have a nice inverse corr.
+
+![alt text](image-3.png)
+
+The non-uniform tire pressure appears to be an artifact of track shape.  With this particular track having more extreme speeds and stops.
+
+![alt text](image-9.png) ![alt text](image-6.png)
+
+
+
+![alt text](image-10.png) ![alt text](image-7.png)
+
+
+### Can individual driver telemetry vs all driver avg,max,min indicate system issues?
+
+Yes!  Average individual driver stats compared  against each other can reveal small offsets.
+
+![alt text](image-11.png)
+
+### Can finishing position be correlated with any specific telemetry subsystem?
+
+Looking at the previous bar charts, car position seems to be durectly linked to average speed.  
 
 ## **Conclusion**
+
+Which vehicle subsystems are correlated?
+	Usual suspects – gforce:throttle/brake, speed:gear, tire temps
+	Unsual – Non-uniform tire pressure, engine temp: remaining fuel  
+
+Can vehicle telemetry indicate small tuning/performance issues?
+	Yes, when driver stats are compared against other driver avg/min/max
+
+Which telemetry characteristics are indicative of higher place finishes? 
+	Average speed is the greatest indicator of car position. Higher gear 		averages and less brake use are indicators of higher average speed.
